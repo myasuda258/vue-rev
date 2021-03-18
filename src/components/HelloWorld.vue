@@ -40,11 +40,15 @@ import CellUnit from '@/components/CellUnit.vue'
 @Component({
   components: {
     CellUnit,
-  }
+  },
 })
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
   private bodyValue: number[][] = Array(8).fill(Array(8).fill(-1))
+
+  private clickHandler(str: string) {
+    console.log('hello world click handler', str)
+  }
 }
 </script>
 

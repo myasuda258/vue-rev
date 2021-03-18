@@ -12,12 +12,14 @@ export default class CellUnit extends Vue {
   @Prop({required: true})
   public value!: number
 
-  @Emit()
+  private text: string = '●'
+  
+  @Emit('clickHandler')
   public click(){
     console.log('emit click')
+    return 'unit'
   }
 
-  public text: string = "●"
   private onClickHandler() {
     console.log('CLICK!!', String(this.value))
     // this.color = "black"
