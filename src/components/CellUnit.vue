@@ -1,6 +1,6 @@
 <template>
-  <button>
-    <span :class="value === 2 ? 'black' : 'white'" @click="onClickHandler">{{value > 0 ? text : 'x' }}</span>
+  <button @click="onClickHandler">
+    <span :class="value === 2 ? 'black' : 'white'">{{value > 0 ? text : 'x' }}</span>
   </button>  
 </template>
 
@@ -14,7 +14,7 @@ export default class CellUnit extends Vue {
 
   private text: string = '●'
   
-  @Emit('clickHandler')
+  @Emit('onClickHandler')
   public click(){
     console.log('emit click')
     return 'unit'

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <div v-for="(row, rindex) in bodyValue" :key="rindex">
-      <cell-unit v-for="(cell, cindex) in row" :key="cindex" :value="bodyValue[cindex][rindex]"></cell-unit>
+      <cell-unit v-for="(cell, cindex) in row" :key="cindex" :value="bodyValue[cindex][rindex]" @onClickHandler="clickCellHandler"></cell-unit>
     </div>
     <h1>{{ msg }}</h1>
     <p>
@@ -46,7 +46,7 @@ export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
   private bodyValue: number[][] = Array(8).fill(Array(8).fill(-1))
 
-  private clickHandler(str: string) {
+  private clickCellHandler(str: string) {
     console.log('hello world click handler', str)
   }
 }
