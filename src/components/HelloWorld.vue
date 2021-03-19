@@ -17,7 +17,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import CellUnit, { CellAddress } from '@/components/CellUnit.vue'
+import CellUnit from '@/components/CellUnit.vue'
+import CellAddress from '@/types/CellAddress'
 
 @Component({
   components: {

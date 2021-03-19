@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
+import CellAddress from '@/types/CellAddress'
 
 @Component
 export default class CellUnit extends Vue {
@@ -30,11 +31,6 @@ export default class CellUnit extends Vue {
     // this.click()
     return this.address
   }
-}
-
-export interface CellAddress {
-  x: number
-  y: number
 }
 </script>
 
