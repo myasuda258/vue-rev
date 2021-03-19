@@ -1,7 +1,15 @@
 <template>
   <div class="hello">
-    <div v-for="(row, rindex) in bodyValue" :key="rindex">
-      <cell-unit v-for="(cell, cindex) in row" :key="cindex" :value="bodyValue[cindex][rindex]" @onClickHandler="clickCellHandler"></cell-unit>
+    <div
+      v-for="(row, rindex) in bodyValue"
+      :key="rindex">
+      <cell-unit
+        v-for="(cell, cindex) in row"
+        :key="cindex"
+        :address="{x:cindex, y:rindex}"
+        :value="bodyValue[rindex][cindex]"
+        @onClickHandler="clickCellHandler"
+      ></cell-unit>
     </div>
     <h1>{{ msg }}</h1>
   </div>
@@ -9,7 +17,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import CellUnit from '@/components/CellUnit.vue'
+import CellUnit, { CellAddress } from '@/components/CellUnit.vue'
 
 @Component({
   components: {
@@ -18,10 +26,36 @@ import CellUnit from '@/components/CellUnit.vue'
 })
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  private bodyValue: number[][] = Array(8).fill(Array(8).fill(-1))
+  private bodyValue: number[][] = // Array(8).fill(Array(8).fill(-1))
+    [[0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    [0,0,0,0,0,0,0,0],
+    ]
 
-  private clickCellHandler(str: string) {
-    console.log('hello world click handler', str)
+  created(){
+    console.log('component created')
+    this.bodyValue[3][3] = 1
+    this.bodyValue[4][4] = 1
+    this.bodyValue[3][4] = 2
+    this.bodyValue[4][3] = 2
+  }
+
+  private clickCellHandler(cell: CellAddress) {
+    const x = cell.x
+    const y = cell.y
+    console.log('hello world click handler', x, y)
+    const bodyValue_ = JSON.parse(JSON.stringify(this.bodyValue))
+    if (bodyValue_[y][x] === 1) {
+      bodyValue_[y][x] = 2
+    } else {
+      bodyValue_[y][x] = 1
+    }
+    this.bodyValue = bodyValue_
   }
 }
 </script>
