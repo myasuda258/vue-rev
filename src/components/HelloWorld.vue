@@ -27,37 +27,44 @@ import CellAddress from '@/types/CellAddress'
 })
 export default class HelloWorld extends Vue {
   @Prop() private msg!: string;
-  private bodyValue: number[][] = // Array(8).fill(Array(8).fill(-1))
-    [[0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0],
-    ]
+  private bodyValue: number[][] = new Array()
+  private turnNextPlayer: number = 1
 
   created(){
     console.log('component created')
-    this.bodyValue[3][3] = 1
-    this.bodyValue[4][4] = 1
-    this.bodyValue[3][4] = 2
-    this.bodyValue[4][3] = 2
+    this.bodyValue = 
+      [
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,1,2,0,0,0],
+        [0,0,0,2,1,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0],
+      ]
   }
 
   private clickCellHandler(cell: CellAddress) {
     const x = cell.x
     const y = cell.y
     console.log('hello world click handler', x, y)
-    const bodyValue_ = JSON.parse(JSON.stringify(this.bodyValue))
-    if (bodyValue_[y][x] === 1) {
-      bodyValue_[y][x] = 2
-    } else {
-      bodyValue_[y][x] = 1
-    }
-    this.bodyValue = bodyValue_
+    this.putStone(cell)
   }
+
+  private putStone(cell: CellAddress) {
+    const x = cell.x
+    const y = cell.y
+    if (this.bodyValue[y][x] > 0) {
+      console.warn('this has stone already', x, y)
+      return
+    }
+    const bodyValue_ = JSON.parse(JSON.stringify(this.bodyValue))
+    bodyValue_[y][x] = this.turnNextPlayer
+    this.bodyValue = bodyValue_
+    this.turnNextPlayer = 3 - this.turnNextPlayer
+  }
+
 }
 </script>
 
