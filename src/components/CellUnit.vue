@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Emit } from 'vue-property-decorator';
-import CellAddress from '@/types/CellAddress'
+import CellAddress from '../types/CellAddress'
 
 @Component
 export default class CellUnit extends Vue {
