@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
+    <display-next-player :next-player="nextPlayer"></display-next-player>
     <game-board
       :next-player="nextPlayer"
       msg="Welcome to Your Vue.js + TypeScript App"
@@ -11,10 +12,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import GameBoard from './components/GameBoard.vue';
+import DisplayNextPlayer from '@/components/DisplayNextPlayer.vue'
 
 @Component({
   components: {
     GameBoard,
+    DisplayNextPlayer,
   },
 })
 export default class App extends Vue {
