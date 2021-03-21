@@ -16,9 +16,9 @@ export default class CellUnit extends Vue {
   public address!: CellAddress
 
   private text: string = '●'
-  
+
   // @Emit('onClickHandler')
-  public click(){
+  public click() {
     console.log('emit click')
     return 'unit'
   }
