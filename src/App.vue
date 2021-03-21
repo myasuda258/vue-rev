@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <game-board msg="Welcome to Your Vue.js + TypeScript App"/>
+    <game-board
+      :next-player="nextPlayer"
+      msg="Welcome to Your Vue.js + TypeScript App"
+      @toggleNextPlayer="toggleNextPlayer"/>
   </div>
 </template>
 
@@ -14,7 +17,13 @@ import GameBoard from './components/GameBoard.vue';
     GameBoard,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  private nextPlayer: number = 1
+
+  private toggleNextPlayer() {
+    this.nextPlayer = 3 - this.nextPlayer
+  }
+}
 </script>
 
 <style>

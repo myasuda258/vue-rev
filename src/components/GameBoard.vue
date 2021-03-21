@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue, Emit } from 'vue-property-decorator'
 import CellUnit from '@/components/CellUnit.vue'
 import CellAddress from '@/types/CellAddress'
 
@@ -28,7 +28,8 @@ import CellAddress from '@/types/CellAddress'
 export default class GameBoard extends Vue {
   @Prop() private msg!: string;
   private bodyValue: number[][] = new Array()
-  private turnNextPlayer: number = 1
+  @Prop()
+  private nextPlayer!: number
 
   created(){
     console.log('component created')
@@ -60,10 +61,13 @@ export default class GameBoard extends Vue {
       return
     }
     const bodyValue_ = JSON.parse(JSON.stringify(this.bodyValue))
-    bodyValue_[y][x] = this.turnNextPlayer
+    bodyValue_[y][x] = this.nextPlayer
     this.bodyValue = bodyValue_
-    this.turnNextPlayer = 3 - this.turnNextPlayer
+    this.toggleNextPlayer()
   }
+
+  @Emit('toggleNextPlayer')
+  private toggleNextPlayer() {}
 
 }
 </script>
