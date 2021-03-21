@@ -25,7 +25,7 @@ import CellAddress from '@/types/CellAddress'
     CellUnit,
   },
 })
-export default class HelloWorld extends Vue {
+export default class GameBoard extends Vue {
   @Prop() private msg!: string;
   private bodyValue: number[][] = new Array()
   private turnNextPlayer: number = 1
