@@ -47,23 +47,46 @@ export default class GameBoard extends Vue {
   }
 
   private clickCellHandler(cell: CellAddress) {
-    const x = cell.x
-    const y = cell.y
-    console.log('hello world click handler', x, y)
-    this.putStone(cell)
+    const cells = this.checkCanPutStone(cell)
+    if (cells.length > 0) {
+      this.putStone(cells)
+    }
   }
 
-  private putStone(cell: CellAddress) {
+  private putStone(cells: CellAddress[]) {
+    const bodyValue_ = JSON.parse(JSON.stringify(this.bodyValue))
+    cells.forEach(cell => {
+      const x = cell.x
+      const y = cell.y
+      bodyValue_[y][x] = this.nextPlayer
+    })
+    this.bodyValue = bodyValue_
+    this.toggleNextPlayer()
+  }
+
+  private checkCanPutStone(cell: CellAddress) {
     const x = cell.x
     const y = cell.y
     if (this.bodyValue[y][x] > 0) {
       console.warn('this has stone already', x, y)
-      return
+      return []
     }
-    const bodyValue_ = JSON.parse(JSON.stringify(this.bodyValue))
-    bodyValue_[y][x] = this.nextPlayer
-    this.bodyValue = bodyValue_
-    this.toggleNextPlayer()
+
+    const around = [-1, 0, 1]
+    if (!around.some(dy => {
+      if (!this.bodyValue[y+dy]) {
+        return []
+      }
+      return around.some(dx => {
+        // console.log(`this.bodyValue[${y+dy}][${x+dx}]: ${this.bodyValue[y+dy][x+dx]}`)
+        return this.bodyValue[y+dy][x+dx] === 3 - this.nextPlayer
+      })      
+    })) {
+      console.warn('this does not have stone around', x, y)
+      return []
+    }
+
+    return [cell]
   }
 
   @Emit('toggleNextPlayer')
