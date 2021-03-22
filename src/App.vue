@@ -13,8 +13,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import GameBoard from './components/GameBoard.vue';
-import DisplayNextPlayer from '@/components/DisplayNextPlayer.vue'
-import PassButton from '@/components/PassButton.vue'
+import DisplayNextPlayer from './components/DisplayNextPlayer.vue'
+import PassButton from './components/PassButton.vue'
 
 @Component({
   components: {
