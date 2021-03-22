@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <display-next-player :next-player="nextPlayer"></display-next-player>
-    <button @click="toggleNextPlayer">Pass</button>
+    <pass-button @toggleNextPlayer="toggleNextPlayer"></pass-button>
     <game-board
       :next-player="nextPlayer"
       msg="Welcome to Your Vue.js + TypeScript App"
@@ -14,11 +14,13 @@
 import { Component, Vue } from 'vue-property-decorator';
 import GameBoard from './components/GameBoard.vue';
 import DisplayNextPlayer from '@/components/DisplayNextPlayer.vue'
+import PassButton from '@/components/PassButton.vue'
 
 @Component({
   components: {
     GameBoard,
     DisplayNextPlayer,
+    PassButton,
   },
 })
 export default class App extends Vue {
