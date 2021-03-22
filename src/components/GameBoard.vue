@@ -47,9 +47,11 @@ export default class GameBoard extends Vue {
   }
 
   private clickCellHandler(cell: CellAddress) {
-    const cells = this.checkCanPutStone(cell)
-    if (cells.length > 0) {
+    const cells = this.generateTurnCellArray(cell)
+    if (cells.length > 2) {
       this.putStone(cells)
+    } else {
+      console.warn('this does not have stone around', cells[0].x, cells[0].y)
     }
   }
 
@@ -64,29 +66,57 @@ export default class GameBoard extends Vue {
     this.toggleNextPlayer()
   }
 
-  private checkCanPutStone(cell: CellAddress) {
+  private generateTurnCellArray(cell: CellAddress) {
     const x = cell.x
     const y = cell.y
+    let returnArray = new Array()
     if (this.bodyValue[y][x] > 0) {
       console.warn('this has stone already', x, y)
-      return []
+      return returnArray
     }
 
     const around = [-1, 0, 1]
-    if (!around.some(dy => {
+    around.forEach(dy => {
       if (!this.bodyValue[y+dy]) {
-        return []
+        return
       }
-      return around.some(dx => {
+      around.forEach(dx => {
         // console.log(`this.bodyValue[${y+dy}][${x+dx}]: ${this.bodyValue[y+dy][x+dx]}`)
-        return this.bodyValue[y+dy][x+dx] === 3 - this.nextPlayer
+        // if (this.bodyValue[y+dy][x+dx] === 3 - this.nextPlayer) {
+          returnArray = returnArray.concat(this.checkOneVector(cell, dx, dy))
+        // }
       })      
-    })) {
-      console.warn('this does not have stone around', x, y)
+    })
+    console.log('return :::', returnArray)
+    returnArray.push(cell)
+    return returnArray
+  }
+
+  private checkOneVector(cell: CellAddress, dx: number, dy: number) {
+    const x = cell.x
+    const y = cell.y
+    if (this.bodyValue[y+dy] === void(0)) {
+      // 確認先が範囲外なら
       return []
     }
-
-    return [cell]
+    if (!this.bodyValue[y+dy][x+dx]) {
+      // 確認先が範囲外or空白なら
+      return []
+    }
+    // 確認先が手番と同じ色なら
+    if (this.bodyValue[y+dy][x+dx] === this.nextPlayer) {
+      return [{x:x+dx, y:y+dy}]
+    }
+    const nextCell = {
+      x: cell.x + dx,
+      y: cell.y + dy,
+    }
+    const beforeCheckAnswer: CellAddress[] = this.checkOneVector(nextCell, dx, dy)
+    if (beforeCheckAnswer.length === 0) {
+      return []
+    }
+    beforeCheckAnswer.push(nextCell)
+    return beforeCheckAnswer
   }
 
   @Emit('toggleNextPlayer')
