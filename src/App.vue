@@ -1,20 +1,35 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <display-next-player :next-player="nextPlayer"></display-next-player>
+    <pass-button @toggleNextPlayer="toggleNextPlayer"></pass-button>
+    <game-board
+      :next-player="nextPlayer"
+      msg="Welcome to Your Vue.js + TypeScript App"
+      @toggleNextPlayer="toggleNextPlayer"/>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import GameBoard from './components/GameBoard.vue';
+import DisplayNextPlayer from '@/components/DisplayNextPlayer.vue'
+import PassButton from '@/components/PassButton.vue'
 
 @Component({
   components: {
-    HelloWorld,
+    GameBoard,
+    DisplayNextPlayer,
+    PassButton,
   },
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  private nextPlayer: number = 1
+
+  private toggleNextPlayer() {
+    this.nextPlayer = 3 - this.nextPlayer
+  }
+}
 </script>
 
 <style>

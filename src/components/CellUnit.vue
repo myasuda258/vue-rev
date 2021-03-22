@@ -16,9 +16,9 @@ export default class CellUnit extends Vue {
   public address!: CellAddress
 
   private text: string = '●'
-  
+
   // @Emit('onClickHandler')
-  public click(){
+  public click() {
     console.log('emit click')
     return 'unit'
   }
@@ -34,7 +34,7 @@ export default class CellUnit extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 button {
   width: 40px;
   height: 40px;
