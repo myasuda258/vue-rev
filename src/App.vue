@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <display-next-player :next-player="nextPlayer"></display-next-player>
+    <button @click="toggleNextPlayer">Pass</button>
     <game-board
       :next-player="nextPlayer"
       msg="Welcome to Your Vue.js + TypeScript App"

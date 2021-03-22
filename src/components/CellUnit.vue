@@ -34,7 +34,7 @@ export default class CellUnit extends Vue {
 }
 </script>
 
-<style>
+<style scoped>
 button {
   width: 40px;
   height: 40px;
